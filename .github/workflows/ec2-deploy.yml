@@ -1,0 +1,22 @@
+name: ec2-deploy
+
+on:
+  push:
+    branched: ["master"]
+
+  workflow_dispatch:
+
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@3
+
+        - name: Deploy
+          run: |
+            echo "${{ secrets.GIT_PRIVATE_KEY }}" > private_key
+            chmod 600 private_key
+            rsync --checksum --delete -av --exclude '.git' --exclude 'private_key' --include '.*' ./ \
+            -e "ssh -o StrictHostKeyChecking=no -i private_key" \
+            ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }}:~
