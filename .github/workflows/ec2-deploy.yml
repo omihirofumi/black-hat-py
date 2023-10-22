@@ -15,7 +15,7 @@ jobs:
 
       - name: Deploy
         run: |
-          sudo apt-get install rsync
+          which rsync
           echo "${{ secrets.GIT_PRIVATE_KEY }}" > private_key
           chmod 600 private_key
           rsync --checksum --delete -av --exclude '.git' --exclude 'private_key' --include '.*' ./ \
