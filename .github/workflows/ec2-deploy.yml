@@ -2,7 +2,7 @@ name: ec2-deploy
 
 on:
   push:
-    branched: ["master"]
+    branches: ["master"]
 
   workflow_dispatch:
 
