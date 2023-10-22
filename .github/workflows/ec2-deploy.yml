@@ -6,17 +6,17 @@ on:
 
   workflow_dispatch:
 
-  jobs:
-    build:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v3
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-        - name: Deploy
-          run: |
-            echo "${{ secrets.GIT_PRIVATE_KEY }}" > private_key
-            chmod 600 private_key
-            rsync --checksum --delete -av --exclude '.git' --exclude 'private_key' --include '.*' ./ \
-            -e "ssh -o StrictHostKeyChecking=no -i private_key" \
-            ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }}:~
+      - name: Deploy
+        run: |
+          echo "${{ secrets.GIT_PRIVATE_KEY }}" > private_key
+          chmod 600 private_key
+          rsync --checksum --delete -av --exclude '.git' --exclude 'private_key' --include '.*' ./ \
+          -e "ssh -o StrictHostKeyChecking=no -i private_key" \
+          ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }}:~
