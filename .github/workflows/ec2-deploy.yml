@@ -15,9 +15,8 @@ jobs:
 
       - name: Deploy
         run: |
-          which rsync
           echo "${{ secrets.GIT_PRIVATE_KEY }}" > private_key
           chmod 600 private_key
-          rsync --checksum --delete -av --exclude '.git' --exclude 'private_key' --include '.*' ./ \
+          rsync --rsync-path=/usr/bin/rsync --checksum --delete -av --exclude '.git' --exclude 'private_key' --include '.*' ./ \
           -e "ssh -o StrictHostKeyChecking=no -i private_key" \
           ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }}:~
