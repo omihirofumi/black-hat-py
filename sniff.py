@@ -3,6 +3,7 @@ import os
 
 HOST = '192.168.11.12'
 
+
 def main():
     if os.name == 'nt':
         socket_protocol = socket.IPPROTO_IP
@@ -20,6 +21,7 @@ def main():
 
     if os.name == 'nt':
         sniffer.ioctl(socket.SIO_RCVALL, socket.RCVALL_OFF)
+
 
 if __name__ == '__main__':
     main()
