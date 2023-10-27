@@ -19,4 +19,4 @@ jobs:
           chmod 600 private_key
           rsync --rsync-path=/usr/bin/rsync --checksum --delete -av --exclude '.git' --exclude 'private_key' --include '.*' ./ \
           -e "ssh -o StrictHostKeyChecking=no -i private_key" \
-          ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }}:~
+          ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }}:~/bhp-python
